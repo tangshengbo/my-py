@@ -48,15 +48,18 @@ def getData(html_text):
     data = body.find('div',{'id': '7d'})
     ul = data.find('ul')
     li = ul.find_all('li')
-
+    num = 0
     for day in li:
         temp = []
         date = day.find('h1').string
-        temp.append(date) #添加日期
+        temp.append(date)  # 添加日期
         inf = day.find_all('p')
-        weather = inf[0].string #天气
+        weather = inf[0].string  # 天气
+        if num == 0:
+            num = 1
+            continue
         temp.append(weather)
-        temperature_highest = inf[1].find('span').string #最高温度
+        temperature_highest = inf[1].find('span').string  # 最高温度
         temperature_low = inf[1].find('i').string  # 最低温度
         temp.append(temperature_highest)
         temp.append(temperature_low)
@@ -123,8 +126,8 @@ if __name__ == '__main__':
     writeData(result, 'D:/weather.csv')  # 数据写入到 csv文档中
     # createTable() #表创建一次就好了，注意
     current_number = 1
-    while current_number <= 10:
+    while current_number <= 5:
         insertData(result)  # 批量写入数据
-    current_number += 1
+        current_number += 1
 
     print('my frist python file')
